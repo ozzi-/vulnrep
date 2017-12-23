@@ -23,6 +23,10 @@ java -jar VulnerabilityReporting.jar 5d
 ```
 Where 5d means get me all the vulnerabilities published in the last 5 days of the keywords defined in subscriptions.json, which i have not seen yet. You can use h for hours and m for minutes too.
 
+# Screenshot
+![screenshot of report](https://i.imgur.com/S2t21Zw.png)
+
+
 # Setup
 In order to automate this, i use a cron job:
 ```sh
