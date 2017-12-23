@@ -1,5 +1,5 @@
 # VulnRep - Vulnerability Reporting
-This tool will collect ) all vulnerabilities (from vulners.com and/or wpvulndb.com) for a defined keywords and generate a HTML report.
+This tool will collect all vulnerabilities (from vulners.com and/or wpvulndb.com) for defined keywords generate a HTML report.
 Additionally, the report will be sent as an email to the recipients defined in email.json.
 
 # Building a runnable JAR from Source
