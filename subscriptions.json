@@ -1,0 +1,25 @@
+{
+        "entries":[
+                {
+                        "name":"custom_wpvulndb_plugin" ,
+                        "plugins":[
+							"duplicate-post","torro-forms","autoptimize","buddypress","mce-table-buttons","polylang","post-types-definitely","regenerate-thumbnails"
+						]
+                },{
+                        "name":"chrome" ,
+                        "cvss": 5.0
+                },{
+                        "name":"firefox" ,
+                        "cvss": 5.0
+                },{
+                        "name":"atlassian" ,
+                        "cvss": 5.0
+                },{
+                        "name":"oracle java" ,
+                        "cvss": 5.0
+                },{
+                        "name":"centos" ,
+                        "cvss": 5.0
+                }
+        ]
+}

@@ -1,0 +1,11 @@
+{
+	"recipients":[ "email@domain.com" ],
+	"sender": {
+		"address": "something@gmail.com",
+		"host": "smtp.gmail.com",
+		"port":25,
+		"user":"something@gmail.com",
+		"password":"***********************",
+		"subject":"Vulnerability Report <d>" 
+	}
+}
