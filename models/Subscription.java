@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Subscription {
 	private String name;
 	private double CVSS;
+	private String apiKey;
+	
 	private ArrayList<String> plugins = new ArrayList<String>();
 	
 	public String getName() {
@@ -27,5 +29,11 @@ public class Subscription {
 	}
 	public void setPlugins(ArrayList<String> plugins){
 		this.plugins=plugins;
+	}
+	public String getApiKey() {
+		return apiKey;
+	}
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 }
