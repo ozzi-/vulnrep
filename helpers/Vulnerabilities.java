@@ -21,6 +21,7 @@ public class Vulnerabilities {
 		Date currentDate = Calendar.getInstance().getTime();
 
 		for (Subscription subscription : subscriptions) {
+			String apiKey = subscription.getApiKey();
 			if(subscription.getName().equals("custom_wpvulndb_plugin")){
 				ArrayList<String> plugins = subscription.getPlugins();
 				for (String plugin : plugins) {
@@ -52,7 +53,7 @@ public class Vulnerabilities {
 					}
 				}
 			}else{
-				String html = NW.getHTML("https://vulners.com/api/v3/search/lucene/?query=" + subscription.getName());
+				String html = NW.getHTML("https://vulners.com/api/v3/search/lucene/?query=" + subscription.getName()+"&api_key="+apiKey);
 				JsonElement jsonElement = new JsonParser().parse(html);
 				JsonObject jsonObject = jsonElement.getAsJsonObject();
 				JsonObject data = jsonObject.getAsJsonObject("data");
