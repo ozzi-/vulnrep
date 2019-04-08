@@ -20,6 +20,8 @@ public class Subscriptions {
 			String subscriptionsString = Convert.convertStreamToString(stream2);
 			stream2.close();
 			JsonElement jsonSubscriptions = new JsonParser().parse(subscriptionsString);
+			String apiKey = jsonSubscriptions.getAsJsonObject().get("apikey").getAsString();
+			
 			JsonElement subscriptionElement = jsonSubscriptions.getAsJsonObject().get("entries");
 			JsonArray subscriptionArray = subscriptionElement.getAsJsonArray();
 			System.out.print("Subscribed to: ");
@@ -35,6 +37,7 @@ public class Subscriptions {
 					subscription.setCVSS(subscriptionJSON.getAsJsonObject().get("cvss").getAsDouble());
 					System.out.print(subscription.getName()+", ");
 				}
+				subscription.setApiKey(apiKey);
 				subscriptions.add(subscription);
 			}
 			System.out.println();
