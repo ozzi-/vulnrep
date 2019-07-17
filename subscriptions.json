@@ -1,4 +1,6 @@
 {
+	"apikeyVulners": "**************",
+	"apikeyWPVulnDB": "**************",
         "entries":[
                 {
                         "name":"custom_wpvulndb_plugin" ,
