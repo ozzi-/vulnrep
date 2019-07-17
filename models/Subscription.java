@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class Subscription {
 	private String name;
 	private double CVSS;
-	private String apiKey;
+	private String apiKeyVulners;
+	private String apiKeyWPVulnDB;
+
 	
 	private ArrayList<String> plugins = new ArrayList<String>();
 	
@@ -30,10 +32,16 @@ public class Subscription {
 	public void setPlugins(ArrayList<String> plugins){
 		this.plugins=plugins;
 	}
-	public String getApiKey() {
-		return apiKey;
+	public String getApiKeyVulners() {
+		return apiKeyVulners;
 	}
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
+	public void setApiKeyVulners(String apiKey) {
+		this.apiKeyVulners = apiKey;
+	}
+	public String getApiKeyWPVulnDB() {
+		return apiKeyWPVulnDB;
+	}
+	public void setApiKeyWPVulnDB(String apiKeyWPVulnDB) {
+		this.apiKeyWPVulnDB = apiKeyWPVulnDB;
 	}
 }
