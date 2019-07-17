@@ -7,9 +7,14 @@ Additionally, the report will be sent as an email to the recipients defined in e
 # Usage
 
 ## API Key
-You should get api-key for agent registration. Create a vulners account then navigate to https://vulners.com/userinfo.
+### Vulners
+Create a vulners account then navigate to https://vulners.com/userinfo.
 Unter the tab "API KEYS", select scope "api", license "free" and enter your public IP where vulnrep will be running.
-Copy the api key and paste it into "subscriptions.json" under "apikey".
+Copy the API key and paste it into "subscriptions.json" under "apikeyVulners".
+
+### WPVulnDB
+Create a WPVulnDB account then navigate to https://wpvulndb.com/users/edit.
+Copy / Generate the API key and paste it into "subscriptions.json" under "apikeyWPVulnDB".
 
 ## Configuration
 In subscriptions.json, you can define keywords which will be used to find vulnerabilities.
