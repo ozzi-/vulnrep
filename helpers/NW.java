@@ -28,7 +28,12 @@ public class NW {
 			return result.toString();
 		} catch (FileNotFoundException e) {
 			return null;
+		} catch (Exception e) {
+			System.err.println("Could not HTTP GET to '"+urlToRead+"' due to: "+e.getMessage()+" - "+e.getCause());
+			if(header!=null) {
+				System.err.println("Header: "+header.getKey()+" - "+header.getValue());
+			}
+			throw e;
 		}
-
 	}
 }
