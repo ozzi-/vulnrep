@@ -2,6 +2,10 @@
 This tool will collect all vulnerabilities (from vulners.com and/or wpvulndb.com) for defined keywords generate a HTML report.
 Additionally, the report will be sent as an email to the recipients defined in email.json.
 
+![screenshot of functionality](https://i.imgur.com/7f9JGhz.png)
+
+
+
 ![screenshot of report](https://i.imgur.com/S2t21Zw.png)
 
 # Usage
