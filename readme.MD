@@ -5,7 +5,7 @@ Additionally, the report will be sent as an email to the recipients defined in e
 ![screenshot of functionality](https://i.imgur.com/7f9JGhz.png)
 
 
-
+Here you can see how the email report will look like:
 ![screenshot of report](https://i.imgur.com/S2t21Zw.png)
 
 # Usage
