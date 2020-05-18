@@ -1,6 +1,5 @@
 package vulnrep;
 import helpers.ArgumentParser;
-import helpers.BuildChecker;
 import helpers.Email;
 import helpers.HTML;
 import helpers.HistoryHandler;
@@ -19,9 +18,7 @@ import models.Vulnerability;
 public class VulnRep {
 
 	public static void main(String[] args) throws Exception {
-		
-		BuildChecker.checkForJSONFiles();
-
+	
 		Date maxAgeDate = ArgumentParser.parseMaxAge(args);
 		ArrayList<Subscription> subscriptions = Subscriptions.loadSubscriptions();
 		HistoryBundle hb = HistoryHandler.getHistory();

@@ -15,7 +15,7 @@ public class ArgumentParser {
 		if (args.length < 1) {
 			System.out.println("No command line argument definind the vulnerability maximum age was found.");
 			System.out.println("Using default of 7 days. (=java -jar vulndb 7d)");
-			System.out.println("m = Minute, h = Hour, d = Day");
+			System.out.println("m = Minute, h = Hour, d = Day");
 			maxageArg = "7d";
 		} else {
 			maxageArg = args[0];
