@@ -31,7 +31,7 @@ public class Vulnerabilities {
 					Vulnerability item = new Vulnerability();
 					String html = NW.getHTML("https://wpvulndb.com/api/v3/plugins/"+plugin,new Header("Authorization", "Token token="+apiKeyWPVulnDB));
 					if(html!=null){
-						JsonElement jsonElement = new JsonParser().parse(html);
+						JsonElement jsonElement = JsonParser.parseString(html);
 						JsonObject jsonObject = jsonElement.getAsJsonObject().getAsJsonObject(plugin);
 						JsonArray vulnerabilities = jsonObject.getAsJsonArray("vulnerabilities");
 						for (JsonElement vulnerability : vulnerabilities) {
@@ -57,7 +57,7 @@ public class Vulnerabilities {
 				}
 			}else{
 				String html = NW.getHTML("https://vulners.com/api/v3/search/lucene/?query=" + subscription.getName()+"&api_key="+apiKeyVulners, null);
-				JsonElement jsonElement = new JsonParser().parse(html);
+				JsonElement jsonElement = JsonParser.parseString(html);
 				JsonObject jsonObject = jsonElement.getAsJsonObject();
 				JsonObject data = jsonObject.getAsJsonObject("data");
 				JsonArray searchArray = data.getAsJsonArray("search");

@@ -32,7 +32,7 @@ public class Email {
 			stream = VulnRep.class.getClass().getResourceAsStream("/email.json");
 			String recipientsString = Convert.convertStreamToString(stream);
 			stream.close();
-			JsonElement jsonRecipients = new JsonParser().parse(recipientsString);
+			JsonElement jsonRecipients = JsonParser.parseString(recipientsString);
 			JsonElement recipientsElement = jsonRecipients.getAsJsonObject().get("recipients");
 			JsonElement senderElement = jsonRecipients.getAsJsonObject().get("sender");
 			String address = senderElement.getAsJsonObject().get("address").getAsString();

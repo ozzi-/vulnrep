@@ -70,7 +70,7 @@ public class HistoryHandler {
 			stream3 = VulnRep.class.getClass().getResourceAsStream("/history.json");
 			String historyString = Convert.convertStreamToString(stream3);
 
-			JsonElement jsonHistory = new JsonParser().parse(historyString);
+			JsonElement jsonHistory = JsonParser.parseString(historyString);
 			JsonElement deleteAfterElement = jsonHistory.getAsJsonObject().get("deleteAfter");
 			deleteAfterDays = deleteAfterElement.getAsJsonObject().get("days").getAsInt();
 
