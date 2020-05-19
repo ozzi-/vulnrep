@@ -36,16 +36,20 @@ public class VulnRep {
 			searchResults = Vulnerabilities.getVulnerabilities(maxAgeDate, subscriptions, hb);
 		}
 		if(!ErrorReporter.failed) {
-			HistoryHandler.writeHistory(hb, hb.getDeleteAfter(),currentDirectory);			
-		}
-		if(!ErrorReporter.failed) {
 			vulnHTML = HTML.generateVulnerabilityHTML(searchResults,subscriptions);			
 		}
 		System.out.println("");
 		System.out.println(vulnHTML);
 		
+		// Only update history if all went well
+		if(!ErrorReporter.failed) {
+			HistoryHandler.writeHistory(hb, hb.getDeleteAfter(),currentDirectory);			
+		}else {
+			System.out.println("Not updating history as ran into errors.");
+		}
+		
 		// Send and write report
 		Email.sendToRecipients(vulnHTML,currentDirectory);
-		IO.writeReport(vulnHTML);
+		IO.writeReport(vulnHTML);	
 	}
 }
