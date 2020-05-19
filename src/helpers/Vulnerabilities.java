@@ -89,7 +89,10 @@ public class Vulnerabilities {
 						item.setId("wpplugin_"+source.get("id").getAsString());
 						JsonObject cvss = source.getAsJsonObject("cvss");
 						if(cvss!=null) {
-							item.setCvss(cvss.get("score").getAsDouble());						
+							JsonElement score = cvss.get("score");
+							if(score!=null) {
+								item.setCvss(score.getAsDouble());								
+							}
 						}
 						item.parseAndAddMetrics(cvss.get("vector").getAsString());
 						if (maxAgeDate.before(item.getPublished()) && !hb.historyContainsID(item.getId()) && (item.getCvss()==0.0 || subscription.getCVSS()<=item.getCvss())) {
