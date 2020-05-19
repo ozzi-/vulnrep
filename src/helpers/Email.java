@@ -27,11 +27,6 @@ public class Email {
 	public static void sendToRecipients(String vulnHTML, String currentDirectory) {
 		int counter=0;
 		try {
-		    if(ErrorReporter.failed) {
-		    	vulnHTML = ErrorReporter.errorMessage+ "<br>\r\n<br>\r\n" + vulnHTML;
-		    	vulnHTML = "*****************<br>\r\n" + vulnHTML;
-		    	vulnHTML ="Error(s) occured:<br>\r\n"+vulnHTML;
-		    }
 			String recipientsString = IO.readFile(currentDirectory+"email.json");
 			JsonElement jsonRecipients = JsonParser.parseString(recipientsString);
 			JsonElement recipientsElement = jsonRecipients.getAsJsonObject().get("recipients");

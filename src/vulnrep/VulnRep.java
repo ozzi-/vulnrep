@@ -35,9 +35,7 @@ public class VulnRep {
 		if(!ErrorReporter.failed) {
 			searchResults = Vulnerabilities.getVulnerabilities(maxAgeDate, subscriptions, hb);
 		}
-		if(!ErrorReporter.failed) {
-			vulnHTML = HTML.generateVulnerabilityHTML(searchResults,subscriptions);			
-		}
+		vulnHTML = HTML.generateVulnerabilityHTML(searchResults,subscriptions);			
 		System.out.println("");
 		System.out.println(vulnHTML);
 		
@@ -49,6 +47,7 @@ public class VulnRep {
 		}
 		
 		// Send and write report
+		vulnHTML = HTML.finishHTML(vulnHTML);
 		Email.sendToRecipients(vulnHTML,currentDirectory);
 		IO.writeReport(vulnHTML);	
 	}

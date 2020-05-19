@@ -8,11 +8,7 @@ import models.Vulnerability;
 
 public class HTML {
 	public static String generateVulnerabilityHTML(ArrayList<Vulnerability> searchResults, ArrayList<Subscription> subscriptions) {
-		String html = "<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n" +  
-				"body {\n" + 
-				" font-family: Arial, Helvetica, sans-serif;\n" + 
-				" font-size: 13px;\n" + 
-				"}</style></head><body>";
+		String html = "";
 		String oldSearchTerm = "";
 		html += "Generated: "+Calendar.getInstance().getTime()+"<br>";
 		html += "Checking for ";
@@ -38,8 +34,22 @@ public class HTML {
 			html += vulnerability.metricToHTML()+"<br>";
 			html += vulnerability.getDescription() + "<br>";
 			html += "<i>Published on: " + vulnerability.getPublished() + "</i><br><br>";
-		}
-		html+= "</body></html>";
+		}	
 		return html;
+	}
+	
+	public static String finishHTML(String vulnHTML) {	
+		String vulnHTMLComplete="<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n" +  
+		"body {\n" + 
+		" font-family: Arial, Helvetica, sans-serif;\n" + 
+		" font-size: 13px;\n" + 
+		"}</style></head><body>";
+		
+	    if(ErrorReporter.failed) {
+	    	vulnHTMLComplete+="Error(s) occured:<br>\r\n";
+	    	vulnHTMLComplete+="*****************<br>\r\n";
+	    	vulnHTMLComplete+=ErrorReporter.errorMessage+ "<br>\r\n<br>\r\n";
+	    }
+	    return vulnHTMLComplete + vulnHTML +"</body></html>";
 	}
 }

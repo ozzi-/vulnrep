@@ -34,12 +34,6 @@ public class IO {
 	public static void writeReport(String vulnHTML) {
 		try{
 		    PrintWriter writer = new PrintWriter("report.html", "UTF-8");
-		    if(ErrorReporter.failed) {
-		    	writer.println("Error(s) occured:");
-		    	writer.println("*****************");
-		    	writer.println(ErrorReporter.errorMessage);
-		    	writer.println("---");
-		    }
 		    writer.println(vulnHTML);
 		    writer.close();
 		} catch (IOException e) {

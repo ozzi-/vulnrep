@@ -20,8 +20,8 @@ public class Vulnerabilities {
 			HistoryBundle hb) {
 		ArrayList<Vulnerability> searchResults = new ArrayList<Vulnerability>();
 		Date currentDate = Calendar.getInstance().getTime();
-
 		for (Subscription subscription : subscriptions) {
+			int foundVulns = 0;
 			String apiKeyVulners = subscription.getApiKeyVulners();
 			String apiKeyWPVulnDB = subscription.getApiKeyWPVulnDB();
 					
@@ -44,8 +44,8 @@ public class Vulnerabilities {
 								item.setId(vuln.get("id").getAsString());
 								item.setDescription("");
 								item.setTitle(vuln.get("title").getAsString());
-					
 								if (maxAgeDate.before(item.getPublished()) && !hb.historyContainsID(item.getId()) && (item.getCvss()==0.0 || subscription.getCVSS()<=item.getCvss())) {
+									foundVulns++;
 									searchResults.add(item);
 									History history = new History();
 									history.setId(item.getId());
@@ -53,6 +53,7 @@ public class Vulnerabilities {
 									hb.add(history); 
 								}
 							}
+							System.out.println("\\_ Success getting vulnerabilites for \""+plugin+"\" ["+foundVulns+"]");
 						}else{
 							System.out.println("404 getting wpvulndb plugin "+plugin);
 						}
@@ -96,6 +97,7 @@ public class Vulnerabilities {
 						}
 						item.parseAndAddMetrics(cvss.get("vector").getAsString());
 						if (maxAgeDate.before(item.getPublished()) && !hb.historyContainsID(item.getId()) && (item.getCvss()==0.0 || subscription.getCVSS()<=item.getCvss())) {
+							foundVulns++;
 							searchResults.add(item);
 							History history = new History();
 							history.setId(item.getId());
@@ -103,6 +105,7 @@ public class Vulnerabilities {
 							hb.add(history); 
 						}
 					}
+					System.out.println("\\_ Success getting vulnerabilites for \""+subscription.getName()+"\" ["+foundVulns+"]");
 				} catch (Exception e) {
 					ErrorReporter.handleError("Error getting vulnerabilities on vulners.com:  "+e.getMessage(),e);
 				}
