@@ -4,7 +4,6 @@ Additionally, the report will be sent as an email to the recipients defined in e
 
 ![screenshot of functionality](https://i.imgur.com/7f9JGhz.png)
 
-
 Here you can see how the email report will look like:
 ![screenshot of report](https://i.imgur.com/S2t21Zw.png)
 
@@ -29,29 +28,13 @@ In email.json you can define your smtp settings for the report delivery.
 ```sh
 java -jar VulnerabilityReporting.jar 5d
 ```
-Where 5d means get me all the vulnerabilities published in the last 5 days of the keywords defined in subscriptions.json, which i have not seen yet. You can use h for hours and m for minutes too.
+Where 5d means get me all the vulnerabilities published in the last 5 days of the keywords defined in subscriptions.json, which I have not seen yet. You can use h for hours and m for minutes too.
 
 ## Creating a job
-In order to automate this, i use a cron job:
+In order to automate this, I use a cron job:
 ```sh
 $ env EDITOR=nano crontab -e
 
 # run every sunday morning at 0700
-0 7 * * 0  cd /etc/vulnrep; java -jar VulnerabilityReporting.jar
-```
-
-# Building a runnable JAR from Source
-1. Open project in Eclipse
-2. Right click project -> Export
-3. Runnable JAR
-4. Export Destination needs to end with 'VulnerabilityReporting.jar'
-5. Library Handling -> Package required libraries into generated JAR
-6. Remove the configuration JSON files from the JAR and place them next to the JAR using the following commands (or use cleanJar.sh)
-```sh
-unzip -o VulnerabilityReporting.jar subscriptions.json
-unzip -o VulnerabilityReporting.jar history.json
-unzip -o VulnerabilityReporting.jar email.json
-zip -d VulnerabilityReporting.jar subscriptions.json
-zip -d VulnerabilityReporting.jar history.json
-zip -d VulnerabilityReporting.jar email.json
+0 7 * * 0  cd /opt/vulnrep; java -jar VulnerabilityReporting.jar
 ```
