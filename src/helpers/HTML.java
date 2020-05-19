@@ -1,26 +1,30 @@
 package helpers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 import models.Subscription;
 import models.Vulnerability;
 
 public class HTML {
-	public static String generateVulnerabilityHTML(ArrayList<Vulnerability> searchResults, ArrayList<Subscription> subscriptions) {
+	public static String generateVulnerabilityHTML(ArrayList<Vulnerability> searchResults,
+			ArrayList<Subscription> subscriptions) {
 		String html = "";
 		String oldSearchTerm = "";
-		html += "Generated: "+Calendar.getInstance().getTime()+"<br>";
+		html += "Generated: " + Calendar.getInstance().getTime() + "<br>";
 		html += "Checking for ";
-		String htmlPost ="";
+		String htmlPost = "";
 		for (Subscription subscription : subscriptions) {
-			if(subscription.getName().equals("custom_wpvulndb_plugin")){
-				htmlPost = " WordPress plugins: "+subscription.getPlugins();
-			}else{
-				html+=subscription.getName()+", ";				
+			if (subscription.getName().equals("custom_wpvulndb_plugin")) {
+				htmlPost = " WordPress plugins: " + subscription.getPlugins();
+			} else {
+				html += subscription.getName() + ", ";
 			}
 		}
-		html+=htmlPost;
+		html += htmlPost;
 		html += "<br><hr>";
 		for (Vulnerability vulnerability : searchResults) {
 			if (!oldSearchTerm.equals(vulnerability.getSearchTerm())) {
@@ -30,26 +34,40 @@ public class HTML {
 			html += "<h2>" + vulnerability.getTitle() + "</h2>";
 			html += "<b>CVSS " + vulnerability.getCvssAsString() + "</b> " + "<a href=\"" + vulnerability.getHref()
 					+ "\">Direct Link</a> ";
-			html += (vulnerability.getVhref()!=null?"<a href=\"" + vulnerability.getVhref() + "\">Vulners Link</a><br>":"");
-			html += vulnerability.metricToHTML()+"<br>";
+			html += (vulnerability.getVhref() != null
+					? "<a href=\"" + vulnerability.getVhref() + "\">Vulners Link</a><br>"
+					: "");
+			html += vulnerability.metricToHTML() + "<br>";
 			html += vulnerability.getDescription() + "<br>";
 			html += "<i>Published on: " + vulnerability.getPublished() + "</i><br><br>";
-		}	
+		}
 		return html;
 	}
-	
-	public static String finishHTML(String vulnHTML) {	
-		String vulnHTMLComplete="<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n" +  
-		"body {\n" + 
-		" font-family: Arial, Helvetica, sans-serif;\n" + 
-		" font-size: 13px;\n" + 
-		"}</style></head><body>";
-		
-	    if(ErrorReporter.failed) {
-	    	vulnHTMLComplete+="Error(s) occured:<br>\r\n";
-	    	vulnHTMLComplete+="*****************<br>\r\n";
-	    	vulnHTMLComplete+=ErrorReporter.errorMessage+ "<br>\r\n<br>\r\n";
-	    }
-	    return vulnHTMLComplete + vulnHTML +"</body></html>";
+
+	public static String finishHTML(String vulnHTML) {
+		String vulnHTMLComplete = "<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n"
+				+ "body {\n" + " font-family: Arial, Helvetica, sans-serif;\n" + " font-size: 13px;\n"
+				+ "}</style></head><body>";
+
+		if (ErrorReporter.failed) {
+			vulnHTMLComplete += "Error(s) occured:<br>\r\n";
+			vulnHTMLComplete += "*****************<br>\r\n";
+			vulnHTMLComplete += ErrorReporter.errorMessage + "<br>\r\n<br>\r\n";
+		}
+		return vulnHTMLComplete + vulnHTML + "</body></html>";
+	}
+
+	public static String getParamsString(Map<String, String> params) throws UnsupportedEncodingException {
+		StringBuilder result = new StringBuilder();
+
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
+			result.append("=");
+			result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
+			result.append("&");
+		}
+
+		String resultString = result.toString();
+		return resultString.length() > 0 ? resultString.substring(0, resultString.length() - 1) : resultString;
 	}
 }

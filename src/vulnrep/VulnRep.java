@@ -16,9 +16,7 @@ import models.Subscription;
 import models.Vulnerability;
 
 public class VulnRep {
-
 	public static void main(String[] args) {
-		
 		String currentDirectory = IO.getCurrentDirectory();
 		HistoryBundle hb = null;
 		ArrayList<Vulnerability>searchResults = null;
@@ -39,7 +37,6 @@ public class VulnRep {
 		System.out.println("");
 		System.out.println(vulnHTML);
 		
-		// Only update history if all went well
 		if(!ErrorReporter.failed) {
 			HistoryHandler.writeHistory(hb, hb.getDeleteAfter(),currentDirectory);			
 		}else {

@@ -43,5 +43,4 @@ public class History {
 	public int hashCode() {
 		return id.hashCode();
 	}
-
 }

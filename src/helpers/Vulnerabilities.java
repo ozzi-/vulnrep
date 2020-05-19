@@ -55,7 +55,7 @@ public class Vulnerabilities {
 							}
 							System.out.println("\\_ Success getting vulnerabilites for \""+plugin+"\" ["+foundVulns+"]");
 						}else{
-							System.out.println("404 getting wpvulndb plugin "+plugin);
+							System.out.println("\\_ 404 getting wpvulndb plugin "+plugin);
 						}
 					} catch (Exception e) {
 						ErrorReporter.handleError("Error getting vulnerabilities on wpvulndb.com:  "+e.getMessage(),e);

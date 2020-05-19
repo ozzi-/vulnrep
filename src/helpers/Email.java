@@ -22,6 +22,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import models.SmtpAuthenticator;
+
 public class Email {
 
 	public static void sendToRecipients(String vulnHTML, String currentDirectory) {
