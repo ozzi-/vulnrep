@@ -1,6 +1,5 @@
 package helpers;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -18,7 +17,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
-import vulnrep.VulnRep;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,12 +24,15 @@ import com.google.gson.JsonParser;
 
 public class Email {
 
-	public static void sendToRecipients(String vulnHTML) {
-		InputStream stream = null;
+	public static void sendToRecipients(String vulnHTML, String currentDirectory) {
+		int counter=0;
 		try {
-			stream = VulnRep.class.getClass().getResourceAsStream("/email.json");
-			String recipientsString = Convert.convertStreamToString(stream);
-			stream.close();
+		    if(ErrorReporter.failed) {
+		    	vulnHTML = ErrorReporter.errorMessage+ "<br>\r\n<br>\r\n" + vulnHTML;
+		    	vulnHTML = "*****************<br>\r\n" + vulnHTML;
+		    	vulnHTML ="Error(s) occured:<br>\r\n"+vulnHTML;
+		    }
+			String recipientsString = IO.readFile(currentDirectory+"email.json");
 			JsonElement jsonRecipients = JsonParser.parseString(recipientsString);
 			JsonElement recipientsElement = jsonRecipients.getAsJsonObject().get("recipients");
 			JsonElement senderElement = jsonRecipients.getAsJsonObject().get("sender");
@@ -46,10 +47,11 @@ public class Email {
 			JsonArray recipients = recipientsElement.getAsJsonArray();
 			for (JsonElement recipient : recipients) {
 				send(recipient.getAsString(),address, subject,"Please find the report attached as HTML", vulnHTML, "report.html", host, port, user, password);
+				counter ++;
 			}
+			System.out.println(counter+" Mail(s) sent");
 		} catch (Exception e) {
-			System.out.print("Error loading email.json ");
-			System.out.println(e.getMessage());
+			ErrorReporter.handleError("Error loading email.json or sending email "+e.getMessage(),e);
 		}
 	}
 
@@ -61,10 +63,10 @@ public class Email {
 		properties.setProperty("mail.password", password);
 		properties.setProperty("mail.smtp.port", String.valueOf(port));
 		properties.setProperty("mail.smtp.starttls.enable", "true");
-		System.out.println("sending mail from "+from+" to "+to+" with subject "
-							+subject+" via server "+mailHost+":"+port+" and user "+user);
+		
+		System.out.println("sending mail from "+from+" to "+to+" with subject "+subject+" via server "+mailHost+":"+port+" and user "+user);
+		
 	    Session session = Session.getInstance(properties, new SmtpAuthenticator(user, password));
-	       
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(from));
@@ -86,9 +88,8 @@ public class Email {
 			Transport.send(message);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			ErrorReporter.handleError("Error sending email: "+e.getMessage(),e);
 		}
-        
 	}
 }
 

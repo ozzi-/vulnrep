@@ -8,7 +8,7 @@ import models.Vulnerability;
 
 public class HTML {
 	public static String generateVulnerabilityHTML(ArrayList<Vulnerability> searchResults, ArrayList<Subscription> subscriptions) {
-		String html = "<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n" +  
+		String html = "<!DOCTYPE html>\n<html><head><meta charset=\"UTF-8\"><title>Vulnerability Report</title><style rel=\"stylesheet\" type=\"text/css\">\n" +  
 				"body {\n" + 
 				" font-family: Arial, Helvetica, sans-serif;\n" + 
 				" font-size: 13px;\n" + 

@@ -1,9 +1,7 @@
 package helpers;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import vulnrep.VulnRep;
 import models.Subscription;
 
 import com.google.gson.JsonArray;
@@ -11,15 +9,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class Subscriptions {
-	public static ArrayList<Subscription> loadSubscriptions() {
+	public static ArrayList<Subscription> loadSubscriptions(String currentDirectory) {
 		ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
-		InputStream stream2 = null;
 		JsonArray pluginArr = null;
 		try {
-			stream2 = VulnRep.class.getClass().getResourceAsStream("/subscriptions.json");
-			String subscriptionsString = Convert.convertStreamToString(stream2);
-			stream2.close();
-			JsonElement jsonSubscriptions = new JsonParser().parse(subscriptionsString);
+			String subscriptionsString = IO.readFile(currentDirectory+"subscriptions.json");
+			JsonElement jsonSubscriptions = JsonParser.parseString(subscriptionsString);
 			String apiKeyVulners = jsonSubscriptions.getAsJsonObject().get("apikeyVulners").getAsString();
 			String apiKeyWPVulnDB= jsonSubscriptions.getAsJsonObject().get("apikeyWPVulnDB").getAsString();
 			
@@ -44,8 +39,7 @@ public class Subscriptions {
 			}
 			System.out.println();
 		} catch (Exception e) {
-			System.out.print("Error loading subscriptions: ");
-			System.out.println(e.getMessage());
+			ErrorReporter.handleError("Error loading subscriptions: "+e.getMessage(),e);
 		}
 		int pluginCount = 0;
 		if(pluginArr!=null){

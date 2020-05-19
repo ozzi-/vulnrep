@@ -1,13 +1,13 @@
 package vulnrep;
 import helpers.ArgumentParser;
 import helpers.Email;
+import helpers.ErrorReporter;
 import helpers.HTML;
 import helpers.HistoryHandler;
+import helpers.IO;
 import helpers.Subscriptions;
 import helpers.Vulnerabilities;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,28 +17,35 @@ import models.Vulnerability;
 
 public class VulnRep {
 
-	public static void main(String[] args) throws Exception {
-	
+	public static void main(String[] args) {
+		
+		String currentDirectory = IO.getCurrentDirectory();
+		HistoryBundle hb = null;
+		ArrayList<Vulnerability>searchResults = null;
+		
+		// Setup
 		Date maxAgeDate = ArgumentParser.parseMaxAge(args);
-		ArrayList<Subscription> subscriptions = Subscriptions.loadSubscriptions();
-		HistoryBundle hb = HistoryHandler.getHistory();
+		ArrayList<Subscription> subscriptions = Subscriptions.loadSubscriptions(currentDirectory);
+		if(!ErrorReporter.failed) {
+			hb = HistoryHandler.getHistory(currentDirectory);			
+		}
+		String vulnHTML = "";
 		
-		ArrayList<Vulnerability> searchResults = Vulnerabilities.getVulnerabilities(maxAgeDate, subscriptions, hb);
-		
-		HistoryHandler.writeHistory(hb, hb.getDeleteAfter());
-			
-		String vulnHTML = HTML.generateVulnerabilityHTML(searchResults,subscriptions);
+		// Run
+		if(!ErrorReporter.failed) {
+			searchResults = Vulnerabilities.getVulnerabilities(maxAgeDate, subscriptions, hb);
+		}
+		if(!ErrorReporter.failed) {
+			HistoryHandler.writeHistory(hb, hb.getDeleteAfter(),currentDirectory);			
+		}
+		if(!ErrorReporter.failed) {
+			vulnHTML = HTML.generateVulnerabilityHTML(searchResults,subscriptions);			
+		}
 		System.out.println("");
 		System.out.println(vulnHTML);
 		
-		try{
-		    PrintWriter writer = new PrintWriter("report.html", "UTF-8");
-		    writer.println(vulnHTML);
-		    writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		Email.sendToRecipients(vulnHTML);
+		// Send and write report
+		Email.sendToRecipients(vulnHTML,currentDirectory);
+		IO.writeReport(vulnHTML);
 	}
 }

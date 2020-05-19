@@ -22,7 +22,7 @@ public class Metric {
 
 	public String toFormattedString() {
 		String metricL = metric.toLowerCase();
-		String valueF = value.substring(0, 1)+value.substring(1).toLowerCase();
+		String valueF = value.substring(0, 1) + value.substring(1).toLowerCase();
 		String metricF = "";
 		switch (metricL) {
 		case "av":
