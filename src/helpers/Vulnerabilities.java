@@ -95,7 +95,10 @@ public class Vulnerabilities {
 								item.setCvss(score.getAsDouble());								
 							}
 						}
-						item.parseAndAddMetrics(cvss.get("vector").getAsString());
+						JsonElement vector = cvss.get("vector");
+						if(vector!=null) {
+							item.parseAndAddMetrics(cvss.get("vector").getAsString());							
+						}
 						if (maxAgeDate.before(item.getPublished()) && !hb.historyContainsID(item.getId()) && (item.getCvss()==0.0 || subscription.getCVSS()<=item.getCvss())) {
 							foundVulns++;
 							searchResults.add(item);
