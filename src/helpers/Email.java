@@ -41,9 +41,12 @@ public class Email {
 			String subject = senderElement.getAsJsonObject().get("subject").getAsString();
 			subject = subject.replace("<d>", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 			
+			boolean smtpSecure = senderElement.getAsJsonObject().get("secure").getAsBoolean();
+			boolean trustAllCertificates = senderElement.getAsJsonObject().get("trustall").getAsBoolean();
+			
 			JsonArray recipients = recipientsElement.getAsJsonArray();
 			for (JsonElement recipient : recipients) {
-				send(recipient.getAsString(),address, subject,"Please find the report attached as HTML", vulnHTML, "report.html", host, port, user, password);
+				send(recipient.getAsString(),address, subject,"Please find the report attached as HTML", vulnHTML, "report.html", host, port, user, password,smtpSecure,trustAllCertificates);
 				counter ++;
 			}
 			System.out.println(counter+" Mail(s) sent");
@@ -52,14 +55,21 @@ public class Email {
 		}
 	}
 
-	private static void send(String to, String from, String subject, String messageText, String attachment, String attachmentName, String mailHost, int port, String user, String password) {
+	private static void send(String to, String from, String subject, String messageText, String attachment, String attachmentName, String mailHost, int port, String user, String password, boolean smtpSecure, boolean trustAllCertificates) {
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", mailHost);
 		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.user", user);
 		properties.setProperty("mail.password", password);
 		properties.setProperty("mail.smtp.port", String.valueOf(port));
-		properties.setProperty("mail.smtp.starttls.enable", "true");
+		if(smtpSecure) {
+			properties.put("mail.smtp.starttls.enable", "true");
+		}
+		if(trustAllCertificates) {
+			properties.put("mail.smtp.ssl.trust", "*");
+		}
+
+		
 		
 		System.out.println("sending mail from "+from+" to "+to+" with subject "+subject+" via server "+mailHost+":"+port+" and user "+user);
 		

@@ -1,4 +1,7 @@
 package vulnrep;
+import java.util.ArrayList;
+import java.util.Date;
+
 import helpers.ArgumentParser;
 import helpers.Email;
 import helpers.ErrorReporter;
@@ -7,16 +10,12 @@ import helpers.HistoryHandler;
 import helpers.IO;
 import helpers.Subscriptions;
 import helpers.Vulnerabilities;
-
-import java.util.ArrayList;
-import java.util.Date;
-
 import models.HistoryBundle;
 import models.Subscription;
 import models.Vulnerability;
 
 public class VulnRep {
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		String currentDirectory = IO.getCurrentDirectory();
 		HistoryBundle hb = null;
 		ArrayList<Vulnerability>searchResults = null;
