@@ -61,7 +61,9 @@ This JSON contains all settings related to the e-mail report.
                 "port":25,
                 "user":"sender@domain.ch",
                 "password":"*****************",
-                "subject":"Vulnerability Report <d>"
+                "subject":"Vulnerability Report <d>",
+		"secure":true,
+		"trustall":false
         }
 }
 ```
