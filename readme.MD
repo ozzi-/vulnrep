@@ -1,3 +1,7 @@
+![build status](https://api.travis-ci.com/ozzi-/vulnrep.svg?branch=master)
+![licence](https://img.shields.io/github/license/ozzi-/vulnrep.svg)
+![open issues](https://img.shields.io/github/issues/ozzi-/vulnrep.svg)
+
 # VulnRep - Vulnerability Reporting
 This tool will collect all vulnerabilities (from vulners.com and/or wpvulndb.com) for defined keywords generate a HTML report.
 Additionally, the report will be sent as an email to defined recipients.
