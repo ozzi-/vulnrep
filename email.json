@@ -6,6 +6,8 @@
 		"port":25,
 		"user":"something@gmail.com",
 		"password":"***********************",
-		"subject":"Vulnerability Report <d>" 
+		"subject":"Vulnerability Report <d>",
+		"secure":true,
+		"trustall":false
 	}
 }
